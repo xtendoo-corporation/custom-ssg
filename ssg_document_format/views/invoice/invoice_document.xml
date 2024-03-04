@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="ssg_document_format.report_invoice_document_inherit"
+                  inherit_id="account.report_invoice_document">
+            <xpath expr="//div[hasclass('mt-5')]//div//h2" position="attributes">
+                <attribute name="style">color:#f57927</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('mt-5')]//div//div//div[@name='invoice_date']" position="replace">
+                <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date" name="invoice_date" style="color:#1da888">
+                    <t t-if="o.move_type == 'out_invoice'">
+                        <span>Invoice Date:</span>
+                    </t>
+                    <t t-elif="o.move_type == 'out_refund'">
+                        <span>Credit Note Date:</span>
+                    </t>
+                    <t t-elif="o.move_type == 'out_receipt'">
+                        <span>Receipt Date:</span>
+                    </t>
+                    <t t-else="">
+                        <span>Date:</span>
+                    </t>
+                    <p class="m-0" style="color:black" t-field="o.invoice_date"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('mt-5')]//div//div//div[@name='due_date']" position="replace">
+                <div class="col-auto col-3 mw-100 mb-2"
+                     t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
+                    <span style="color:#1da888">Due Date:</span>
+                    <p class="m-0" t-field="o.invoice_date_due" style="color:black"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('mt-5')]//div//table[@name='invoice_line_table']//thead" position="attributes">
+                <attribute name="style">border-top: 4px solid #1da888 !important;</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('mt-5')]//div//table[@name='invoice_line_table']"
+                   position="inside">
+                <style>
+                    table tbody tr:last-child td {
+                    border-bottom: 4px solid #1da888 !important;
+                    }
+                </style>
+            </xpath>
+            <xpath expr="//div[hasclass('mt-5')]//div//table[@name='invoice_line_table']" position="inside">
+                <style>
+                    th[name='th_description'] span,
+                    th[name='th_quantity'] span,
+                    th[name='th_priceunit'] span,
+                    th[name='th_taxes'] span,
+                    th[name='th_subtotal'] span {
+                    color: #1da888 !important;
+                    }
+                </style>
+            </xpath>
+        </template>
+<!--        <template id="custom_document_tax_totals" inherit_id="account.document_tax_totals">-->
+<!--            <xpath expr="//tr[td/strong[text()='Total'] or td/strong[text()='Untaxed Amount']]" position="inside">-->
+<!--                <style>-->
+<!--                    td strong:contains('Total') {-->
+<!--                    color: #1da888 !important;-->
+<!--                    }-->
+
+<!--                    td strong:contains('Untaxed Amount') {-->
+<!--                    color: green !important;-->
+<!--                    }-->
+<!--                </style>-->
+<!--            </xpath>-->
+<!--        </template>-->
+    </data>
+</odoo>
